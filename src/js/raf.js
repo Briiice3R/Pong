@@ -47,7 +47,12 @@ let yPaddle = (canvas.clientHeight - heightPaddle) - 20;
 
 let xBall = canvas.clientWidth/2;
 let yBall = yPaddle - radiusBall-5;
-const ballSpeed = 2;
+let ballSpeed = 4;
+let raf;
+
+let score = 0;
+
+const newGameButton = document.getElementById("newGame");
 
 function drawBall(){
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
@@ -73,41 +78,59 @@ document.addEventListener("keyup", (e)=>{
     if(e.code == "ArrowLeft") leftPressed = false;
     if(e.code == "ArrowRight") rightPressed = false;
 });
+
 function radToDeg(rad){
     return rad * 180/Math.PI
 }
 
-function ballVector(){
-    const angle = (-3*Math.PI/4) * Math.random() + (-Math.PI/4);
-    console.log(radToDeg(angle));
-    // [0 ; -135[
-    const direction = Math.random() < 0.5 ? 1 : -1;
+function angle() {
+    return Math.random() * (-Math.PI / 2) + (-Math.PI / 4);
+}
+
+function ballVectors(){
+    console.log(radToDeg(angle()));
     
-    const vectorX = Math.cos(angle) * ballSpeed*direction;
-    const vectorY = Math.sin(angle) * ballSpeed;
+    const vectorX = Math.cos(angle()) * ballSpeed;
+    const vectorY = Math.sin(angle()) * ballSpeed;
+    console.log(vectorX, vectorY);
+    
     return [vectorX, vectorY];
 }
 
-let vectors = ballVector();
+let vectors = ballVectors();
 function updateBallMovement(){
-    //console.log(yBall);
-    
-    console.log(xBall <= radiusBall);
-    if(xBall >=canvas.clientWidth - radiusBall || xBall <= radiusBall){
+    let rightSideBall = xBall+radiusBall;
+    let bottomSideBall = yBall+radiusBall;
+    if(rightSideBall >=canvas.clientWidth  || xBall <= radiusBall){
+        vectors[0] = -vectors[0];
         
-        vectors = ballVector()
     }
+   
     if(yBall<=radiusBall){
-        vectors = ballVector();
-        yBall-=1*vectors[1];
+        vectors[1] = -vectors[1];
     }
     
-    xBall+=vectors[0];
-    yBall+=vectors[1];
     
+    
+    if(bottomSideBall>=yPaddle){
+        if(rightSideBall>=xPaddle && xBall-radiusBall<=xPaddle+widthPaddle){
+            vectors[1] = -vectors[1];
+        }
+        
+        
+        if(bottomSideBall>=yPaddle+heightPaddle){
+            if(bottomSideBall>=canvas.clientHeight){
+                cancelAnimationFrame(raf)
+                
+            }
+        }
+    }
+    xBall+=vectors[0];
+    
+    yBall+=vectors[1];
 }
 
-function loop(){
+function updatePaddlePosition(){
     if(leftPressed){
         xPaddle-=ballSpeed;
         if(xPaddle <= 10){
@@ -121,11 +144,33 @@ function loop(){
         }
     }
     
-    drawBall();
-    drawPaddle();
-    updateBallMovement();
-    const raf = requestAnimationFrame(loop);
 }
 
-loop();
+function resetVariable(){
+    xBall = canvas.clientWidth/2;
+    yBall = yPaddle - radiusBall-5;
+    score = 0;
+    vectors = ballVectors();
+    xPaddle = (canvas.clientWidth-widthPaddle)/2;
+    yPaddle = (canvas.clientHeight - heightPaddle) - 20;
+}
+
+function start(){
+    resetVariable();
+    loop();
+}
+
+newGameButton.addEventListener("click", (e)=>{
+    start();
+});
+
+function loop(){
+    raf = requestAnimationFrame(loop);
+    drawBall();
+    drawPaddle();
+    updatePaddlePosition()
+    updateBallMovement();
+}
+
+
 //movePaddle();
