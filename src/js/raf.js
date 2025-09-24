@@ -112,9 +112,10 @@ function updateBallMovement(){
     
     
     
-    if(bottomSideBall>=yPaddle){
+    if(vectors[1] > 0 && bottomSideBall>=yPaddle){
         if(rightSideBall>=xPaddle && xBall-radiusBall<=xPaddle+widthPaddle){
             vectors[1] = -vectors[1];
+            yBall = yPaddle - radiusBall;
         }
         
         
