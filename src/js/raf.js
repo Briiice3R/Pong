@@ -51,6 +51,7 @@ let ballSpeed = 4;
 let raf;
 
 let score = 0;
+let interval;
 
 const newGameButton = document.getElementById("newGame");
 
@@ -122,6 +123,7 @@ function updateBallMovement(){
         if(bottomSideBall>=yPaddle+heightPaddle){
             if(bottomSideBall>=canvas.clientHeight){
                 cancelAnimationFrame(raf)
+                clearInterval(interval);
                 
             }
         }
@@ -147,22 +149,35 @@ function updatePaddlePosition(){
     
 }
 
+function updateScore(){
+    score++;
+}
+
 function resetVariable(){
     xBall = canvas.clientWidth/2;
     yBall = yPaddle - radiusBall-5;
     score = 0;
     vectors = ballVectors();
     xPaddle = (canvas.clientWidth-widthPaddle)/2;
-    yPaddle = (canvas.clientHeight - heightPaddle) - 20;
+    yPaddle = (canvas.clientHeight - heightPaddle) - 20;    
+    cancelAnimationFrame(raf);
+    clearInterval(interval);
 }
 
 function start(){
     resetVariable();
     loop();
+    interval = setInterval(()=>{
+        updateScore();
+        console.log(score);
+    }, 1000)
+    
+    
 }
 
 newGameButton.addEventListener("click", (e)=>{
     start();
+    
 });
 
 function loop(){
