@@ -54,6 +54,8 @@ let score = 0;
 let interval;
 
 const newGameButton = document.getElementById("newGame");
+const leftMobile = document.querySelector(".leftMobile");
+const rightMobile = document.querySelector(".rightMobile");
 
 function drawBall(){
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
@@ -75,9 +77,20 @@ document.addEventListener("keydown", (e)=>{
     if(e.code == "ArrowRight") rightPressed = true;
 });
 document.addEventListener("keyup", (e)=>{
-    
     if(e.code == "ArrowLeft") leftPressed = false;
     if(e.code == "ArrowRight") rightPressed = false;
+});
+leftMobile.addEventListener("touchstart", (e)=>{
+    leftPressed = true;
+});
+leftMobile.addEventListener("touchend", (e)=>{
+    leftPressed = false;
+});
+rightMobile.addEventListener("touchstart", (e)=>{
+    rightPressed = true;
+});
+rightMobile.addEventListener("touchend", (e)=>{
+    rightPressed = false;
 });
 
 function radToDeg(rad){
@@ -89,7 +102,6 @@ function angle() {
 }
 
 function ballVectors(){
-    console.log(radToDeg(angle()));
     
     const vectorX = Math.cos(angle()) * ballSpeed;
     const vectorY = Math.sin(angle()) * ballSpeed;
