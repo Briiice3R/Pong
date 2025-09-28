@@ -209,12 +209,12 @@ newGameButton.addEventListener("click", (e)=>{
 });
 
 function loop(){
+    raf = requestAnimationFrame(loop);
     drawBall();
     drawPaddle();
     updatePaddlePosition()
     updateBallMovement();
     loose();
-    raf = requestAnimationFrame(loop);
 }
 
 
