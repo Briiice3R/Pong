@@ -1,3 +1,10 @@
+:root{
+    --main-color: #120022;
+    --secondary-color:#EF2B93;
+    --optional-color: #A70D5F;
+    --radius: 30px;
+}
+
 body {
     
     color: white;
@@ -9,14 +16,17 @@ body {
 }
 
 h1{
-    font-size: 60px;
+    font-size: 100px;
+    color: var(--main-color);
+    text-shadow: 4px 2px 1px #EF2B93;
+    text-transform: uppercase;
 }
 button{
     border: 0;
 }
 
 main{
-    background: linear-gradient(#7e0afa, #f222ff);
+    background: var(--main-color);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -26,7 +36,8 @@ main{
 }
 
 canvas {
-    background: linear-gradient(#8c1eff, #f222ff);
+    background: var(--main-color);
+    border: 4px solid var(--secondary-color);
     display: block;
     
     
@@ -38,9 +49,10 @@ canvas {
     font-size: 60px;
     margin: 30px 0;
     padding: 20px 40px;
-    background: linear-gradient(to left, #f222ff, #8c1eff);
-    color:white;
-    border-radius: 10px;
+    background: var(--secondary-color);
+    color:whitesmoke;
+    border-radius: var(--radius);
+    box-shadow: 5px 5px 0px 5px var(--optional-color);
     width: 100%;
     font-weight: bolder;
 }
@@ -59,10 +71,12 @@ canvas {
     height: 200px;
     width: 200px;
     
-    border-radius: 50%;
+    border-radius: var(--radius);
     margin: 10px 100px;
-    color:white;
+    color:whitesmoke;
     
-    background: linear-gradient(#8c1eff, #f222ff);
+    background: var(--secondary-color);
+    box-shadow: 5px 5px 0px 5px var(--optional-color);
+    
     
 }
