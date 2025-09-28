@@ -52,14 +52,17 @@ let raf;
 
 let score = 0;
 let interval;
+let hasLoose = false;
 
 const newGameButton = document.getElementById("newGame");
 const leftMobile = document.querySelector(".leftMobile");
 const rightMobile = document.querySelector(".rightMobile");
 
+const textLoose = document.querySelector(".textLoose");
+
 function drawBall(){
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "#ffd319";
     ctx.beginPath();
     ctx.arc(xBall, yBall, radiusBall, 0, Math.PI*2);
     ctx.fill();
@@ -136,6 +139,7 @@ function updateBallMovement(){
             if(bottomSideBall>=canvas.clientHeight){
                 cancelAnimationFrame(raf)
                 clearInterval(interval);
+                hasLoose = true;
                 
             }
         }
@@ -143,6 +147,15 @@ function updateBallMovement(){
     xBall+=vectors[0];
     
     yBall+=vectors[1];
+}
+
+function loose(){
+    if(hasLoose){
+        textLoose.textContent = "Vous avez perdu !"
+    } else{
+        textLoose.textContent = "";
+        
+    }
 }
 
 function updatePaddlePosition(){
@@ -175,6 +188,7 @@ function resetVariable(){
     cancelAnimationFrame(raf);
     clearInterval(interval);
     document.querySelector(".score").textContent = 0;
+    hasLoose = false;
 }
 
 function start(){
@@ -200,6 +214,7 @@ function loop(){
     drawPaddle();
     updatePaddlePosition()
     updateBallMovement();
+    loose();
 }
 
 
