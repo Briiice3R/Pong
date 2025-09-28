@@ -41,11 +41,11 @@ const radiusBall = 30;
 
 const widthPaddle = 180;
 const heightPaddle = 25;
-let xPaddle = (canvas.clientWidth-widthPaddle)/2;
-let yPaddle = (canvas.clientHeight - heightPaddle) - 20;
+let xPaddle = (canvas.width-widthPaddle)/2;
+let yPaddle = (canvas.height - heightPaddle) - 20;
 
 
-let xBall = canvas.clientWidth/2;
+let xBall = canvas.width/2;
 let yBall = yPaddle - radiusBall-5;
 let ballSpeed = 4;
 let raf;
@@ -61,7 +61,7 @@ const rightMobile = document.querySelector(".rightMobile");
 const textLoose = document.querySelector(".textLoose");
 
 function drawBall(){
-    ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#ffd319";
     ctx.beginPath();
     ctx.arc(xBall, yBall, radiusBall, 0, Math.PI*2);
@@ -117,7 +117,7 @@ let vectors = ballVectors();
 function updateBallMovement(){
     let rightSideBall = xBall+radiusBall;
     let bottomSideBall = yBall+radiusBall;
-    if(rightSideBall >=canvas.clientWidth  || xBall <= radiusBall){
+    if(rightSideBall >=canvas.width  || xBall <= radiusBall){
         vectors[0] = -vectors[0];
         
     }
@@ -136,7 +136,7 @@ function updateBallMovement(){
         
         
         if(bottomSideBall>=yPaddle+heightPaddle){
-            if(bottomSideBall>=canvas.clientHeight){
+            if(bottomSideBall>=canvas.height){
                 cancelAnimationFrame(raf)
                 clearInterval(interval);
                 hasLoose = true;
@@ -167,8 +167,8 @@ function updatePaddlePosition(){
     }
     if(rightPressed){
         xPaddle+=ballSpeed;
-        if(xPaddle >= canvas.clientWidth - widthPaddle - 10){
-            xPaddle=canvas.clientWidth-widthPaddle - 10;
+        if(xPaddle >= canvas.width - widthPaddle - 10){
+            xPaddle=canvas.width-widthPaddle - 10;
         }
     }
     
@@ -179,12 +179,12 @@ function updateScore(){
 }
 
 function resetVariable(){
-    xBall = canvas.clientWidth/2;
+    xBall = canvas.width/2;
     yBall = yPaddle - radiusBall-5;
     score = 0;
     vectors = ballVectors();
-    xPaddle = (canvas.clientWidth-widthPaddle)/2;
-    yPaddle = (canvas.clientHeight - heightPaddle) - 20;    
+    xPaddle = (canvas.width-widthPaddle)/2;
+    yPaddle = (canvas.height - heightPaddle) - 20;    
     cancelAnimationFrame(raf);
     clearInterval(interval);
     document.querySelector(".score").textContent = 0;
