@@ -162,6 +162,7 @@ function resetVariable(){
     yPaddle = (canvas.clientHeight - heightPaddle) - 20;    
     cancelAnimationFrame(raf);
     clearInterval(interval);
+    document.querySelector(".score").textContent = 0;
 }
 
 function start(){
@@ -169,6 +170,7 @@ function start(){
     loop();
     interval = setInterval(()=>{
         updateScore();
+        document.querySelector(".score").textContent = score;
         console.log(score);
     }, 1000)
     
