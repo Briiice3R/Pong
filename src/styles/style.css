@@ -9,6 +9,14 @@ h1{
     font-size: 60px;
 }
 
+main{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 canvas {
     background: white;
     display: block;
