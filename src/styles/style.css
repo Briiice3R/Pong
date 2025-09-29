@@ -4,6 +4,9 @@
     --optional-color: #A70D5F;
     --radius: 15px;
 }
+*, ::before, ::after{
+    box-sizing: border-box;
+}
 
 body {
     
@@ -12,6 +15,10 @@ body {
     text-align: center;
     padding: 0;
     margin: 0;
+    display: flex;
+    
+    flex-direction: column;
+    min-height: 100vh;
        
 }
 
@@ -27,7 +34,8 @@ button{
 
 main{
     background: var(--main-color);
-    min-height: 100vh;
+    
+    flex: 1 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,14 +62,15 @@ canvas {
     color:whitesmoke;
     border-radius: var(--radius);
     box-shadow: 5px 5px 0px 5px var(--optional-color);
-    width: 100%;
+    max-width: 100%;
     font-weight: bolder;
+    cursor: pointer;
 }
 
 .scoreText, .highestScoreText{
     font-size: 20px;
     background: var(--secondary-color);
-    padding: 10px 40px;
+    padding: 8px 40px;
     border-radius: var(--radius);
 }
 
@@ -90,6 +99,20 @@ canvas {
     
     background: var(--secondary-color);
     box-shadow: 5px 5px 0px 5px var(--optional-color);
+    
+    
+}
+
+footer{
+    flex-shrink: 0;
+    padding: 5px;
+    background: var(--secondary-color);
+}
+
+footer a{
+    text-decoration: none;
+    color: whitesmoke;
+    font-weight: bolder;
     
     
 }
