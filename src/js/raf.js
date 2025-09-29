@@ -17,9 +17,9 @@ let raf;
 let score = 0;
 let interval;
 let hasLoose = false;
-//window.localStorage.setItem("score", "0");
-//let highestScore = document.querySelector(".")
+window.localStorage.setItem("highestScore", "0");
 
+const highestScore = document.querySelector(".highestScore");
 const newGameButton = document.getElementById("newGame");
 const leftMobile = document.querySelector(".leftMobile");
 const rightMobile = document.querySelector(".rightMobile");
@@ -151,6 +151,10 @@ function updateScore(){
     score++;
 }
 
+function updateHighestScore(){
+    if(score > window.localStorage.getItem("highestScore")) window.localStorage.setItem("highestScore", score.toString());
+}
+
 function resetVariable(){
     xBall = canvas.width/2;
     yBall = yPaddle - radiusBall-5;
@@ -171,6 +175,8 @@ function start(){
     interval = setInterval(()=>{
         updateScore();
         document.querySelector(".score").textContent = score;
+        updateHighestScore();
+        highestScore.textContent = window.localStorage.getItem("highestScore");
     }, 1000)
     
     
