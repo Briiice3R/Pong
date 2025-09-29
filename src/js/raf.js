@@ -1,58 +1,24 @@
-/*const canvas = document.getElementById("demo");
-const ctx = canvas.getContext("2d");
 
-let x = 20;                      // position de la balle (axe des abscisses X)
-const y = canvas.height / 2;     // centrage vertical dans le canvas
-const speed = 2;                 // vitesse de la balle
-let rafId;                       // identifiant de la boucle d'animation
-
-function drawBall() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // efface l'écran
-    ctx.fillStyle = "orange";
-    //dessin de la balle
-    ctx.beginPath();
-    ctx.arc(x, y, 15, 0, Math.PI * 2);
-    ctx.fill();
-}
-
-function update() {
-    x += speed;
-    if (x > canvas.width - 15) x = -15; // reset quand la balle sort du cadre du canvas
-}
-
-function loop() {
-    update();
-    drawBall();
-    rafId = requestAnimationFrame(loop); // planifie la prochaine frame
-}
-
-// démarrer l'animation
-loop();
-
-// possibilité d'arrêter l'animation avec le bouton 'stop'
-let stopAnimation = document.getElementById('stop');
-stopAnimation.addEventListener('click', () => {
-    cancelAnimationFrame(rafId)
-})
-*/
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const radiusBall = 30;
+const radiusBall = canvas.width * 0.05;
 
-const widthPaddle = 180;
-const heightPaddle = 25;
+const widthPaddle = canvas.width/4;
+const heightPaddle = 10;
 let xPaddle = (canvas.width-widthPaddle)/2;
 let yPaddle = (canvas.height - heightPaddle) - 20;
 
 
 let xBall = canvas.width/2;
 let yBall = yPaddle - radiusBall-5;
-let ballSpeed = 4;
+let ballSpeed = 3;
 let raf;
 
 let score = 0;
 let interval;
 let hasLoose = false;
+//window.localStorage.setItem("score", "0");
+//let highestScore = document.querySelector(".")
 
 const newGameButton = document.getElementById("newGame");
 const leftMobile = document.querySelector(".leftMobile");
@@ -99,14 +65,22 @@ function radToDeg(rad){
 }
 
 function angle() {
-    return Math.random() * (-Math.PI / 2) + (-Math.PI / 4);
+    let angle;
+    do{
+        angle = (-3 * Math.PI / 4) + Math.random() * (Math.PI / 2);
+    } while(Math.abs(angle + Math.PI/2) <0.2);
+    return angle;
 }
 
 function ballVectors(){
+    let a = angle();
     
-    const vectorX = Math.cos(angle()) * ballSpeed;
-    const vectorY = Math.sin(angle()) * ballSpeed;
+    
+    const vectorX = Math.cos(a) * ballSpeed;
+    const vectorY = Math.sin(a) * ballSpeed;
     console.log(vectorX, vectorY);
+    
+    
     
     return [vectorX, vectorY];
 }
@@ -149,10 +123,11 @@ function updateBallMovement(){
 
 function loose(){
     if(hasLoose){
-        ctx.font = "40px sans-serif"
+        ctx.font = "20px sans-serif"
         ctx.textBaseline = 'middle'; 
         ctx.textAlign = 'center';
         ctx.fillText("Vous avez perdu !", canvas.width/2, canvas.height/2);
+        ctx.fillText(`Score : ${score}s`, canvas.width/2, canvas.height/2 +25);
     }
 }
 
@@ -180,6 +155,7 @@ function resetVariable(){
     xBall = canvas.width/2;
     yBall = yPaddle - radiusBall-5;
     score = 0;
+    document.querySelector(".score").textContent = score;
     vectors = ballVectors();
     xPaddle = (canvas.width-widthPaddle)/2;
     yPaddle = (canvas.height - heightPaddle) - 20;    
@@ -195,7 +171,6 @@ function start(){
     interval = setInterval(()=>{
         updateScore();
         document.querySelector(".score").textContent = score;
-        console.log(score);
     }, 1000)
     
     
@@ -205,6 +180,7 @@ newGameButton.addEventListener("click", (e)=>{
     start();
     
 });
+
 
 function loop(){
     raf = requestAnimationFrame(loop);

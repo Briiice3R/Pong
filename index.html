@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Animation avec requestAnimationFrame</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./src/styles/style.css">
   <script src="https://kit.fontawesome.com/2dd4a91686.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,10 +15,11 @@
   <main>
     <h1>Pong Game</h1>
     <div class="jeu">
-      <canvas id="canvas" width="750" height="800"></canvas>
+      <canvas id="canvas" width="250" height="350"></canvas>
       <button id="newGame">Lancer une partie</button>
     </div>
     <p class="scoreText">Score : <span class="score">0</span>s</p>
+    <p class="highestScoreText">Meilleur score : <span class="highestScore">0</span>s</p>
     <div class="mobileButtons">
       <button class="leftMobile">
         <i class="fa-solid fa-arrow-left"></i>
